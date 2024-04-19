@@ -2,29 +2,11 @@
 # Before importing libraries, make sure you are logged into ArcGIS Pro with sign me automatically checked.
 # If you have problem with loading the login page, and if it is internet explorer security blocks,
 # Then add www.arcgis.com and js.arcgis.com to the trusted sites.
-# Check if the latest ArcGIS version is installed.
+# Check whether the latest ArcGIS version is installed.
 import os
 import arcpy
-import config
+import ago_classes
 from arcgis.gis import GIS
-
-class arcgis_project:
-    def __init__(self, rel_path, aprx_file, map_in_aprx) -> None:
-        self.rel_path = rel_path
-        self.aprx_file = aprx_file
-        self.map_in_aprx = map_in_aprx
-
-
-class ago_object:
-    def __init__(self, user, password, ago_folder_name, sd_fs_name, summary, tags, description) -> None:
-        self.user = user
-        self.password = password
-        self.ago_folder_name = ago_folder_name
-        self.sd_fs_name = sd_fs_name
-        self.summary = summary
-        self.tags = tags
-        self.description = description
-
 
 def update_hosted_service(rel_path, aprx_file, map_in_aprx, user, password, ago_folder_name, sd_fs_name, summary, tags, description):
     '''
@@ -129,17 +111,19 @@ def update_hosted_service(rel_path, aprx_file, map_in_aprx, user, password, ago_
     print("lock files deleted.")
 
 def main():
+    arcgis_project = ago_classes.arcgis_project
+    ago_object = ago_classes.ago_object
     
     try:
-        rel_path = r"\\ax1gis03\f$\Projects\Hosted_SDE\SUST_WaterSense_Calcs"
+        rel_path = r"C:\Temp"
         local_project = arcgis_project(rel_path=rel_path,
-                                            aprx_file=os.path.join(rel_path,"SUST_WaterSense_Calcs.aprx"),
-                                            map_in_aprx="SUST_WaterSense_Calcs")
+                                            aprx_file=os.path.join(rel_path,"PROJECT.aprx"),
+                                            map_in_aprx="MAP")
         
         ago_object = ago_object(user="USERNAME", password="PASSWORD",
-                                    ago_folder_name="", sd_fs_name="SUST_WaterSense_Calcs",
-                                    summary="SUST_WaterSense_Calcs", tags="SUST_WaterSense_Calcs", 
-                                    description="SUST_WaterSense_Calcs")
+                                    ago_folder_name="", sd_fs_name="Layer_Name_on_AGO",
+                                    summary="Summary", tags="Tags", 
+                                    description="Description")
 
         print(f"Project file : {local_project.aprx_file}")
         aprx_to_save = arcpy.mp.ArcGISProject(local_project.aprx_file)
