@@ -15,3 +15,5 @@ class ago_object:
         self.summary = summary
         self.tags = tags
         self.description = description
+        self.share_organization = True
+        self.share_everyone = False
