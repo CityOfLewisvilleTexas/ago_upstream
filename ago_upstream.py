@@ -8,7 +8,7 @@ import arcpy
 import ago_classes
 from arcgis.gis import GIS
 
-def update_hosted_service(rel_path, aprx_file, map_in_aprx, user, password, ago_folder_name, sd_fs_name, summary, tags, description):
+def update_hosted_service(rel_path, aprx_file, map_in_aprx, user, password, ago_folder_name, sd_fs_name, summary, tags, description, share_organization, share_everyone):
     '''
         all parameters are strings. 
         rel_path : Local path where the project is located, e.g. C:\Temp
@@ -30,8 +30,6 @@ def update_hosted_service(rel_path, aprx_file, map_in_aprx, user, password, ago_
 
     portal = "http://www.arcgis.com"
     # Set sharing options
-    shrOrg = True
-    shrEveryone = False
     shrGroups = ""
 
     sd_draft = os.path.join(rel_path, sd_fs_name + ".sddraft")
@@ -94,9 +92,9 @@ def update_hosted_service(rel_path, aprx_file, map_in_aprx, user, password, ago_
             print("Overwriting the service --- sdItem.publish…")
             fs = sdItem.publish(overwrite=True)
 
-            if shrOrg or shrEveryone or shrGroups:
+            if share_organization or share_everyone or shrGroups:
                 print("Setting sharing options…")
-                fs.share(org=shrOrg, everyone=shrEveryone, groups=shrGroups)
+                fs.share(org=share_organization, everyone=share_everyone, groups=shrGroups)
 
             print("Finished updating: {} – ID: {}".format(fs.title, fs.id))
             break
@@ -123,7 +121,7 @@ def main():
         ago_object = ago_object(user="USERNAME", password="PASSWORD",
                                     ago_folder_name="", sd_fs_name="Layer_Name_on_AGO",
                                     summary="Summary", tags="Tags", 
-                                    description="Description")
+                                    description="Description", share_organization=True, share_everyone=False)
 
         print(f"Project file : {local_project.aprx_file}")
         aprx_to_save = arcpy.mp.ArcGISProject(local_project.aprx_file)
