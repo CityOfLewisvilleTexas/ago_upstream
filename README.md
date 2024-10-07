@@ -23,7 +23,7 @@ This script syncs local data with an ArcGIS Online (AGO) layer, using a local Ar
   The username used to log in to AGO.  
   **Example:** `your_username`
 
-- **`pass:word`** (string):  
+- **`password`** (string):  
   The password used to log in to AGO.  
   **Example:** `your_password`
 
@@ -66,7 +66,7 @@ sync_data_with_ago(
     aprx_file="zoning.aprx",
     map_in_aprx="Map",
     user="your_username",
-    pass:word="your_password",
+    password="your_password",
     ago_folder_name="Transportation",
     sd_fs_name="Zoning",
     summary="This is the transportation layer of COL",
